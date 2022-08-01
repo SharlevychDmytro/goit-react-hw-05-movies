@@ -1,6 +1,8 @@
 export const theme = {
   colors: {
-    background: '#e1edf7',
+    background: '#2196f3',
+    textFirst: '#ffffff',
+    textSecond: '#000000',
   },
   space: [0, 2, 4, 8, 16, 32, 64, 128, 256],
   fonts: {
@@ -26,6 +28,7 @@ export const theme = {
   borders: {
     none: 'none',
     normal: '1px solid',
+    bold: '2px solid',
   },
   radii: {
     none: '0',

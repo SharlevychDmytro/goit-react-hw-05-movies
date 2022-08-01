@@ -1,8 +1,9 @@
+import { Suspense } from 'react';
 import { useEffect, useState } from 'react';
 import { requestPopularMovies } from 'API/service';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, Outlet, useLocation } from 'react-router-dom';
 
-export const Home = () => {
+const Home = () => {
   const [movies, setMovies] = useState([]);
   const location = useLocation();
 
@@ -30,7 +31,12 @@ export const Home = () => {
             </Link>
           </li>
         ))}
-      </ul>
+      </ul>{' '}
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
+
+export default Home;

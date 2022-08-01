@@ -1,13 +1,21 @@
-import { Link, Outlet } from 'react-router-dom';
+import { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+import { NavItem, Header } from 'components/AppBar/AppBar.styled';
 
-export const AppBar = () => {
+const AppBar = () => {
   return (
     <>
-      <header>
-        <Link to="/">Home</Link>
-        <Link to="movies">Movies</Link>
-      </header>
-      <Outlet />
+      <Header>
+        <nav>
+          <NavItem to="/">Home</NavItem>
+          <NavItem to="movies">Movies</NavItem>
+        </nav>
+      </Header>
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
+
+export default AppBar;

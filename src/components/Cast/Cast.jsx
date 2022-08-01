@@ -1,9 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import { moviesCast } from 'API/service';
 import image from 'img/image-not-found.png';
+import { List } from 'components/Cast/Cast.styled';
 
-export const Cast = () => {
+const Cast = () => {
   const [cast, setCast] = useState([]);
   const { detailsId } = useParams();
 
@@ -21,7 +22,7 @@ export const Cast = () => {
 
   return (
     <>
-      <ul>
+      <List>
         {cast.map(({ id, name, profile_path }) => (
           <li key={id}>
             <img
@@ -35,8 +36,12 @@ export const Cast = () => {
             <h3>{name}</h3>
           </li>
         ))}
-      </ul>
-      <Outlet />
+      </List>
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
+
+export default Cast;

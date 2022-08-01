@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { SearchBar } from 'components/SearchBar/SearchBar';
 import { Outlet, useSearchParams, Link, useLocation } from 'react-router-dom';
 import { searchMovies } from 'API/service';
 
-export const Movies = () => {
+const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
@@ -34,7 +34,11 @@ export const Movies = () => {
           </li>
         ))}
       </ul>
-      <Outlet />
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
+
+export default Movies;

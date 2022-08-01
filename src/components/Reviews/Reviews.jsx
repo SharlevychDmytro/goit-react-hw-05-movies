@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { Outlet, useParams } from 'react-router-dom';
 import { moviesReviews } from 'API/service';
 
-export const Reviews = () => {
+const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const { detailsId } = useParams();
 
@@ -32,7 +32,11 @@ export const Reviews = () => {
       ) : (
         <div>We don't have any reviews for this movie</div>
       )}
-      <Outlet />
+      <Suspense>
+        <Outlet />
+      </Suspense>
     </>
   );
 };
+
+export default Reviews;

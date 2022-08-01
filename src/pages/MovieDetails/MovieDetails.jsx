@@ -1,10 +1,17 @@
-import { useEffect, useState } from 'react';
-import { Link, Outlet, useParams, useLocation } from 'react-router-dom';
+import { useEffect, useState, Suspense } from 'react';
+import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { moviesInfo } from 'API/service';
 import { Box } from 'components/Box';
 import image from 'img/image-not-found.png';
+import {
+  Wraper,
+  Overviev,
+  Genres,
+  Link,
+  ListLink,
+} from 'pages/MovieDetails/MovieDetails.styled';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movie, setMovie] = useState({});
   const { detailsId } = useParams();
   const location = useLocation();
@@ -26,9 +33,9 @@ export const MovieDetails = () => {
   const validGenres = genres.map(genre => genre.name).join(' ');
 
   return (
-    <>
-      <Box>
-        <Link to={backLinkHref}>Back</Link>
+    <Box padding="20px 0px">
+      <Link to={backLinkHref}>Back</Link>
+      <Box display="flex">
         <img
           src={
             poster_path
@@ -37,29 +44,36 @@ export const MovieDetails = () => {
           }
           alt={`${title}`}
         />
-        <h2>{title}</h2>
-        <p>User score: {Math.round(vote_average * 10)}%</p>
-        <div>
-          <p>Overviev</p>
-          <span>{overview}</span>
-        </div>
-        <div>
-          <p>Genres</p>
-          <span>{validGenres}</span>
-        </div>
+        <Wraper>
+          {' '}
+          <h2>{title}</h2>
+          <p>User score: {Math.round(vote_average * 10)}%</p>
+          <div>
+            <Overviev>Overviev</Overviev>
+            <span>{overview}</span>
+          </div>
+          <div>
+            <Genres>Genres</Genres>
+            <span>{validGenres}</span>
+          </div>
+        </Wraper>
       </Box>
       <Box>
         <h2>Additional information</h2>
-        <ul>
+        <ListLink>
           <li>
             <Link to="cast">Cast</Link>
           </li>
           <li>
             <Link to="reviews">Revievs</Link>
           </li>
-        </ul>
+        </ListLink>
       </Box>
-      <Outlet />
-    </>
+      <Suspense>
+        <Outlet />
+      </Suspense>
+    </Box>
   );
 };
+
+export default MovieDetails;
