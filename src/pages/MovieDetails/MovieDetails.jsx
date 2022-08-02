@@ -13,6 +13,7 @@ import {
 
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
+  const [isLoad, setIsLoad] = useState(false);
   const { detailsId } = useParams();
   const location = useLocation();
   const backLinkHref = location.state?.from ?? '/';
@@ -22,8 +23,9 @@ const MovieDetails = () => {
       try {
         const response = await moviesInfo(detailsId);
         setMovie(response.data);
+        setIsLoad(true);
       } catch (error) {
-        setMovie({});
+        setIsLoad(false);
       }
     };
     fetchMoviesInfo();
@@ -31,6 +33,10 @@ const MovieDetails = () => {
 
   const { poster_path, title, vote_average, overview, genres = [] } = movie;
   const validGenres = genres.map(genre => genre.name).join(' ');
+
+  if (!isLoad) {
+    return <div>Sorry, there was an error loading data.</div>;
+  }
 
   return (
     <Box padding="20px 0px">
@@ -62,10 +68,14 @@ const MovieDetails = () => {
         <h2>Additional information</h2>
         <ListLink>
           <li>
-            <Link to="cast">Cast</Link>
+            <Link to="cast" state={{ from: backLinkHref }}>
+              Cast
+            </Link>
           </li>
           <li>
-            <Link to="reviews">Revievs</Link>
+            <Link to="reviews" state={{ from: backLinkHref }}>
+              Revievs
+            </Link>
           </li>
         </ListLink>
       </Box>
